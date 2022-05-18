@@ -23,6 +23,7 @@ class ScreenLockinPattern implements IScreenLockinPattern {
     public Future<Integer> countPatternsFrom(final int firstPoint, final int length) {
 
         ExecutorService service = Executors.newFixedThreadPool(4);
+
         return service.submit(() -> calculatePatterns(firstPoint, length));
 
     }
