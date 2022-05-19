@@ -34,15 +34,21 @@ class ScreenLockinPattern implements IScreenLockinPattern {
 
         int possible = 0;
 
+        // Checks for valid valid inputs
         if (!validSize(maxLength) || !validStart(startPos)) {
             return 0;
         }
 
+        //End of recursive call
         if (maxLength == 1) {
             return 1;
         }
 
         usedNumbers[startPos - 1] = true;
+
+        /*
+         * Recursive call, keeps going until the length becomes 1 and takes one step back (Depth-First).
+         */
 
         for (int i = 1; i <= 9; i++) {
             if (!usedNumbers[i - 1] && valid(startPos, i)) {
@@ -64,10 +70,17 @@ class ScreenLockinPattern implements IScreenLockinPattern {
 
     private boolean valid(int currPos, int nextPos) {
         /*
-         *Checks for the conditions required for the move to be legal
-         * */
+          Checks for the conditions required for the move to be legal,
+          by checking the unique rules for each move.
+
+          5 it's center has no restrictions
+
+          Odd numbers can only go to the corners if the number between has already been used
+          Even numbers can only go to the opposite side if the center has been used
+
+          */
         switch (currPos) {
-            case 5:             // 5 is center, can go anywhere
+            case 5:
                 return true;
             case 1:
                 return !(nextPos == 7 && !usedNumbers[3]) && !(nextPos == 9 && !usedNumbers[4]) && !(nextPos == 3 && !usedNumbers[1]);
